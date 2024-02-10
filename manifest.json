@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Screener.in Better Results Highlighter",
+  "version": "1.0",
+  "description": "Highlight quarterly results on Screener.in when they are better year-over-year.",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.screener.in/*"],
+      "js": ["scripts/content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon16.png"
+  }
+}

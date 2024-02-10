@@ -253,7 +253,7 @@ function highlightYearlyResultColumns() {
         const needsClassification = rowKey;
 
         if (needsClassification) {
-          for (let i = 5; i < row.children.length; i++) {
+          for (let i = 2; i < row.children.length; i++) {
             const previous =
               row.children[i - (previousPeriod === "quarterly" ? 1 : 4)];
             const current = row.children[i];

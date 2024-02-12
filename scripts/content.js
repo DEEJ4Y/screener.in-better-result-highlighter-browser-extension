@@ -48,6 +48,14 @@ function highlightQuarterlyResultColumns() {
       greaterIsBetter: true,
       period: "quarterly",
     },
+    "Financing Profit": {
+      greaterIsBetter: true,
+      period: "yearly",
+    },
+    "Financing Margin": {
+      greaterIsBetter: true,
+      period: "quarterly",
+    },
     "Exceptional items": {
       greaterIsBetter: false,
       period: "quarterly",
@@ -138,12 +146,6 @@ function highlightQuarterlyResultColumns() {
 
             const highlightGreen = () => {
               current.style.backgroundColor = "#9cee7c77"; // Highlight  column
-              current.setAttribute(
-                "title",
-                `${changePercentage.toFixed(0)}% ${
-                  previousPeriod === "quarterly" ? "QoQ" : "YoY"
-                }`
-              );
             };
 
             // Highlight columns if better
@@ -156,6 +158,12 @@ function highlightQuarterlyResultColumns() {
                 highlightGreen();
               }
             }
+            current.setAttribute(
+              "title",
+              `${changePercentage.toFixed(0)}% ${
+                previousPeriod === "quarterly" ? "QoQ" : "YoY"
+              }`
+            );
           }
         }
       } else {
@@ -198,6 +206,12 @@ function highlightYearlyResultColumns() {
       greaterIsBetter: true,
     },
     OPM: {
+      greaterIsBetter: true,
+    },
+    "Financing Profit": {
+      greaterIsBetter: true,
+    },
+    "Financing Margin": {
       greaterIsBetter: true,
     },
     "Exceptional items": {
@@ -283,12 +297,6 @@ function highlightYearlyResultColumns() {
 
             const highlightGreen = () => {
               current.style.backgroundColor = "#9cee7c77"; // Highlight  column
-              current.setAttribute(
-                "title",
-                `${changePercentage.toFixed(0)}% ${
-                  previousPeriod === "quarterly" ? "QoQ" : "YoY"
-                }`
-              );
             };
 
             // Highlight columns if better
@@ -301,6 +309,7 @@ function highlightYearlyResultColumns() {
                 highlightGreen();
               }
             }
+            current.setAttribute("title", `${changePercentage.toFixed(0)}%`);
           }
         }
       }

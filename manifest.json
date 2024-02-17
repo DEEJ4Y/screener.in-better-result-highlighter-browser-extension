@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Screener.in Better Results Highlighter",
-  "version": "1.0",
+  "version": "2.0",
   "description": "Highlight quarterly results on Screener.in when they are better year-over-year.",
   "permissions": [],
   "action": {

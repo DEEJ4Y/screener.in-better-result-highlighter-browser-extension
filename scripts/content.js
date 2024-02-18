@@ -1,6 +1,57 @@
-// Function to calculate YoY change
+// Function to get storage key
+function getStorageItemByKey(key) {
+  return new Promise((resolve) => {
+    if (!key) return console.error('No key provided');
+
+    chrome.storage.sync.get(key, (storageObject) => {
+      resolve(storageObject[key]);
+    });
+  });
+}
+
+// Function to green flag a node.
+function greenFlagNode(node, title = '') {
+  node.style.backgroundColor = '#9cee7c77';
+  node.style.color = 'black';
+
+  if (title && title.length > 0) node.title = title;
+}
+
+// Function to red flag a node.
+function redFlagNode(node, title = '') {
+  node.style.backgroundColor = '#e35050';
+  node.style.color = 'white';
+
+  if (title && title.length > 0) node.title = title;
+}
+
+// Function to calculate change in a metric
 function calculateChange(currentValue, previousValue) {
   return ((currentValue - previousValue) / previousValue) * 100;
+}
+
+// Function to red flag companies not listed on NSE
+async function RedFlagNonNSE() {
+  const nseOnly = Boolean(await getStorageItemByKey('config.nseOnly'));
+
+  if (nseOnly) {
+    const companyLinkSet = [...document.querySelectorAll('.company-links')];
+    const links = companyLinkSet.map((s) => [...s.children]).flat();
+    const bseLinks = [];
+
+    let hasNse = false;
+
+    links.forEach((link) => {
+      if (link.href?.includes('nseindia.com')) hasNse = true;
+      if (link.href?.includes('bseindia.com')) bseLinks.push(link);
+    });
+
+    if (!hasNse) {
+      bseLinks.forEach((link) => {
+        redFlagNode(link.children[1], 'This company is not listed on NSE.');
+      });
+    }
+  }
 }
 
 // Function to highlight columns
@@ -166,8 +217,6 @@ function highlightQuarterlyResultColumns() {
             );
           }
         }
-      } else {
-        console.log(rowKey);
       }
     }
   });
@@ -320,12 +369,11 @@ function highlightYearlyResultColumns() {
 // Function to observe changes
 function observeChanges() {
   setInterval(() => {
+    RedFlagNonNSE();
     highlightQuarterlyResultColumns();
     highlightYearlyResultColumns();
   }, 1000); // Check every 1 second changes
 }
 
-// Run the highlightColumns function and start observing changes
-highlightQuarterlyResultColumns();
-highlightYearlyResultColumns();
+// Start observing changes
 observeChanges();

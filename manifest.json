@@ -3,7 +3,7 @@
   "name": "Screener.in Better Results Highlighter",
   "version": "2.0",
   "description": "Highlight quarterly results on Screener.in when they are better year-over-year.",
-  "permissions": [],
+  "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

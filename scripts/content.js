@@ -1,84 +1,84 @@
 // Function to calculate YoY change
-function calculateYoY(currentValue, previousValue) {
+function calculateChange(currentValue, previousValue) {
   return ((currentValue - previousValue) / previousValue) * 100;
 }
 
 // Function to highlight columns
 function highlightQuarterlyResultColumns() {
   // Identify the quarterly results table
-  const quarterlyTable = document.querySelector("#quarters .data-table");
+  const quarterlyTable = document.querySelector('#quarters .data-table');
 
   // Extract data from the table
-  const rows = quarterlyTable.querySelectorAll("tbody tr");
+  const rows = quarterlyTable.querySelectorAll('tbody tr');
 
   const quarterlyRowsNeedingClassification = {
     Sales: {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
     Revenue: {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
     // Interest: {
     //   greaterIsBetter: false,
     //   period: "quarterly",
     // },
-    "YOY Sales Growth": {
+    'YOY Sales Growth': {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
     // Expenses: {
     //   greaterIsBetter: false,
     //   period: "quarterly",
     // },
-    "Material Cost": {
+    'Material Cost': {
       greaterIsBetter: false,
-      period: "quarterly",
+      period: 'quarterly',
     },
     // "Employee Cost": {
     //   greaterIsBetter: false,
     //   period: "quarterly",
     // },
-    "Operating Profit": {
+    'Operating Profit': {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
     OPM: {
       greaterIsBetter: true,
-      period: "quarterly",
+      period: 'quarterly',
     },
-    "Financing Profit": {
+    'Financing Profit': {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
-    "Financing Margin": {
+    'Financing Margin': {
       greaterIsBetter: true,
-      period: "quarterly",
+      period: 'quarterly',
     },
-    "Exceptional items": {
+    'Exceptional items': {
       greaterIsBetter: false,
-      period: "quarterly",
+      period: 'quarterly',
     },
     // Interest: {
     //   greaterIsBetter: false,
     //   period: "quarterly",
     // },
-    "Profit before tax": {
+    'Profit before tax': {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
-    "Net Profit": {
+    'Net Profit': {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
     EPS: {
       greaterIsBetter: true,
-      period: "yearly",
+      period: 'yearly',
     },
-    "Net NPA": {
+    'Net NPA': {
       greaterIsBetter: false,
-      period: "quarterly",
+      period: 'quarterly',
     },
   };
 
@@ -88,7 +88,7 @@ function highlightQuarterlyResultColumns() {
     rowColorSetState[key] = false;
   });
 
-  const rowNeedsClassification = (rowName = "") => {
+  const rowNeedsClassification = (rowName = '') => {
     const requiresClassificationKeys = Object.keys(
       quarterlyRowsNeedingClassification
     );
@@ -118,26 +118,26 @@ function highlightQuarterlyResultColumns() {
         if (needsClassification) {
           for (let i = 5; i < row.children.length; i++) {
             const previous =
-              row.children[i - (previousPeriod === "quarterly" ? 1 : 4)];
+              row.children[i - (previousPeriod === 'quarterly' ? 1 : 4)];
             const current = row.children[i];
 
             const previousNumber = Number(
               previous.textContent
-                .split(",")
-                .join("")
-                .split("%")
-                .join("")
-                .split(" ")
-                .join("")
+                .split(',')
+                .join('')
+                .split('%')
+                .join('')
+                .split(' ')
+                .join('')
             );
             const currentNumber = Number(
               current.textContent
-                .split(",")
-                .join("")
-                .split("%")
-                .join("")
-                .split(" ")
-                .join("")
+                .split(',')
+                .join('')
+                .split('%')
+                .join('')
+                .split(' ')
+                .join('')
             );
 
             const currentIsGreater = currentNumber > previousNumber;
@@ -145,7 +145,7 @@ function highlightQuarterlyResultColumns() {
               ((currentNumber - previousNumber) / previousNumber) * 100;
 
             const highlightGreen = () => {
-              current.style.backgroundColor = "#9cee7c77"; // Highlight  column
+              current.style.backgroundColor = '#9cee7c77'; // Highlight  column
             };
 
             // Highlight columns if better
@@ -159,9 +159,9 @@ function highlightQuarterlyResultColumns() {
               }
             }
             current.setAttribute(
-              "title",
+              'title',
               `${changePercentage.toFixed(0)}% ${
-                previousPeriod === "quarterly" ? "QoQ" : "YoY"
+                previousPeriod === 'quarterly' ? 'QoQ' : 'YoY'
               }`
             );
           }
@@ -175,10 +175,10 @@ function highlightQuarterlyResultColumns() {
 
 function highlightYearlyResultColumns() {
   // Identify the quarterly results table
-  const yearlyTable = document.querySelector("#profit-loss .data-table");
+  const yearlyTable = document.querySelector('#profit-loss .data-table');
 
   // Extract data from the table
-  const rows = yearlyTable.querySelectorAll("tbody tr");
+  const rows = yearlyTable.querySelectorAll('tbody tr');
 
   const yearlyRowsNeedingClassification = {
     Sales: {
@@ -190,46 +190,46 @@ function highlightYearlyResultColumns() {
     // Interest: {
     //   greaterIsBetter: false,
     // },
-    "YOY Sales Growth": {
+    'YOY Sales Growth': {
       greaterIsBetter: true,
     },
     // Expenses: {
     //   greaterIsBetter: false,
     // },
-    "Material Cost": {
+    'Material Cost': {
       greaterIsBetter: false,
     },
     // "Employee Cost": {
     //   greaterIsBetter: false,
     // },
-    "Operating Profit": {
+    'Operating Profit': {
       greaterIsBetter: true,
     },
     OPM: {
       greaterIsBetter: true,
     },
-    "Financing Profit": {
+    'Financing Profit': {
       greaterIsBetter: true,
     },
-    "Financing Margin": {
+    'Financing Margin': {
       greaterIsBetter: true,
     },
-    "Exceptional items": {
+    'Exceptional items': {
       greaterIsBetter: false,
     },
     // Interest: {
     //   greaterIsBetter: false,
     // },
-    "Profit before tax": {
+    'Profit before tax': {
       greaterIsBetter: true,
     },
-    "Net Profit": {
+    'Net Profit': {
       greaterIsBetter: true,
     },
     EPS: {
       greaterIsBetter: true,
     },
-    "Net NPA": {
+    'Net NPA': {
       greaterIsBetter: false,
     },
   };
@@ -240,7 +240,7 @@ function highlightYearlyResultColumns() {
     rowColorSetState[key] = false;
   });
 
-  const rowNeedsClassification = (rowName = "") => {
+  const rowNeedsClassification = (rowName = '') => {
     const requiresClassificationKeys = Object.keys(
       yearlyRowsNeedingClassification
     );
@@ -263,32 +263,32 @@ function highlightYearlyResultColumns() {
         rowColorSetState[rowKey] = true;
         const greaterIsBetter =
           yearlyRowsNeedingClassification[rowKey].greaterIsBetter;
-        const previousPeriod = "quarterly";
+        const previousPeriod = 'quarterly';
         const needsClassification = rowKey;
 
         if (needsClassification) {
           for (let i = 2; i < row.children.length; i++) {
             const previous =
-              row.children[i - (previousPeriod === "quarterly" ? 1 : 4)];
+              row.children[i - (previousPeriod === 'quarterly' ? 1 : 4)];
             const current = row.children[i];
 
             const previousNumber = Number(
               previous.textContent
-                .split(",")
-                .join("")
-                .split("%")
-                .join("")
-                .split(" ")
-                .join("")
+                .split(',')
+                .join('')
+                .split('%')
+                .join('')
+                .split(' ')
+                .join('')
             );
             const currentNumber = Number(
               current.textContent
-                .split(",")
-                .join("")
-                .split("%")
-                .join("")
-                .split(" ")
-                .join("")
+                .split(',')
+                .join('')
+                .split('%')
+                .join('')
+                .split(' ')
+                .join('')
             );
 
             const currentIsGreater = currentNumber > previousNumber;
@@ -296,7 +296,7 @@ function highlightYearlyResultColumns() {
               ((currentNumber - previousNumber) / previousNumber) * 100;
 
             const highlightGreen = () => {
-              current.style.backgroundColor = "#9cee7c77"; // Highlight  column
+              current.style.backgroundColor = '#9cee7c77'; // Highlight  column
             };
 
             // Highlight columns if better
@@ -309,7 +309,7 @@ function highlightYearlyResultColumns() {
                 highlightGreen();
               }
             }
-            current.setAttribute("title", `${changePercentage.toFixed(0)}%`);
+            current.setAttribute('title', `${changePercentage.toFixed(0)}%`);
           }
         }
       }

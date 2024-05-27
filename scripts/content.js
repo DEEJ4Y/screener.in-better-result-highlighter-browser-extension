@@ -57,7 +57,7 @@ function highlightQuarterlyResultColumns() {
       period: "quarterly",
     },
     "Exceptional items": {
-      greaterIsBetter: True,
+      greaterIsBetter: true,
       period: "quarterly",
     },
     // Interest: {
@@ -215,7 +215,7 @@ function highlightYearlyResultColumns() {
       greaterIsBetter: true,
     },
     "Exceptional items": {
-      greaterIsBetter: True,
+      greaterIsBetter: true,
     },
     // Interest: {
     //   greaterIsBetter: false,

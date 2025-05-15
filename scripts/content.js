@@ -317,15 +317,157 @@ function highlightYearlyResultColumns() {
   });
 }
 
+function highlightQuarterlyShareholdingPattern() {
+  const quarterlyShpTable = document.querySelector(
+    "#quarterly-shp .data-table"
+  );
+  if (!quarterlyShpTable) return;
+  const rows = quarterlyShpTable.querySelectorAll("tbody tr");
+
+  const shareholdingRows = {
+    Promoters: { greaterIsBetter: true, period: "quarterly" },
+    FIIs: { greaterIsBetter: true, period: "quarterly" },
+    DIIs: { greaterIsBetter: true, period: "quarterly" },
+    Public: { greaterIsBetter: false, period: "quarterly" },
+  };
+
+  const rowColorSetState = {};
+  Object.keys(shareholdingRows).forEach((key) => {
+    rowColorSetState[key] = false;
+  });
+
+  const rowNeedsClassification = (rowName = "") => {
+    const keys = Object.keys(shareholdingRows);
+    for (let i = 0; i < keys.length; i++) {
+      if (rowName.includes(keys[i])) return keys[i];
+    }
+  };
+
+  rows.forEach((row) => {
+    const rowName = row.children[0].textContent;
+    const rowKey = rowNeedsClassification(rowName);
+    if (rowKey && !rowColorSetState[rowKey]) {
+      rowColorSetState[rowKey] = true;
+      const { greaterIsBetter, period } = shareholdingRows[rowKey];
+      for (let i = 2; i < row.children.length; i++) {
+        const previous = row.children[i - (period === "quarterly" ? 1 : 4)];
+        const current = row.children[i];
+        const previousNumber = Number(
+          previous.textContent
+            .split(",")
+            .join("")
+            .split("%")
+            .join("")
+            .split(" ")
+            .join("")
+        );
+        const currentNumber = Number(
+          current.textContent
+            .split(",")
+            .join("")
+            .split("%")
+            .join("")
+            .split(" ")
+            .join("")
+        );
+        const currentIsGreater = currentNumber >= previousNumber;
+        const changePercentage =
+          ((currentNumber - previousNumber) / previousNumber) * 100;
+        const highlightGreen = () => {
+          current.style.backgroundColor = "#9cee7c77";
+        };
+        if (currentIsGreater) {
+          if (greaterIsBetter) highlightGreen();
+        } else {
+          if (!greaterIsBetter) highlightGreen();
+        }
+        current.setAttribute("title", `${changePercentage.toFixed(0)}% QoQ`);
+      }
+    }
+  });
+}
+
+function highlightYearlyShareholdingPattern() {
+  const yearlyShpTable = document.querySelector("#yearly-shp .data-table");
+  if (!yearlyShpTable) return;
+  const rows = yearlyShpTable.querySelectorAll("tbody tr");
+
+  const shareholdingRows = {
+    Promoters: { greaterIsBetter: true },
+    FIIs: { greaterIsBetter: true },
+    DIIs: { greaterIsBetter: true },
+    Public: { greaterIsBetter: false },
+  };
+
+  const rowColorSetState = {};
+  Object.keys(shareholdingRows).forEach((key) => {
+    rowColorSetState[key] = false;
+  });
+
+  const rowNeedsClassification = (rowName = "") => {
+    const keys = Object.keys(shareholdingRows);
+    for (let i = 0; i < keys.length; i++) {
+      if (rowName.includes(keys[i])) return keys[i];
+    }
+  };
+
+  rows.forEach((row) => {
+    const rowName = row.children[0].textContent;
+    const rowKey = rowNeedsClassification(rowName);
+    if (rowKey && !rowColorSetState[rowKey]) {
+      rowColorSetState[rowKey] = true;
+      const greaterIsBetter = shareholdingRows[rowKey].greaterIsBetter;
+      for (let i = 2; i < row.children.length; i++) {
+        const previous = row.children[i - 1];
+        const current = row.children[i];
+        const previousNumber = Number(
+          previous.textContent
+            .split(",")
+            .join("")
+            .split("%")
+            .join("")
+            .split(" ")
+            .join("")
+        );
+        const currentNumber = Number(
+          current.textContent
+            .split(",")
+            .join("")
+            .split("%")
+            .join("")
+            .split(" ")
+            .join("")
+        );
+        const currentIsGreater = currentNumber > previousNumber;
+        const changePercentage =
+          ((currentNumber - previousNumber) / previousNumber) * 100;
+        const highlightGreen = () => {
+          current.style.backgroundColor = "#9cee7c77";
+        };
+        if (currentIsGreater) {
+          if (greaterIsBetter) highlightGreen();
+        } else {
+          if (!greaterIsBetter) highlightGreen();
+        }
+        current.setAttribute("title", `${changePercentage.toFixed(0)}% YoY`);
+      }
+    }
+  });
+}
+
 // Function to observe changes
 function observeChanges() {
   setInterval(() => {
     highlightQuarterlyResultColumns();
     highlightYearlyResultColumns();
+    highlightQuarterlyShareholdingPattern();
+    highlightYearlyShareholdingPattern();
   }, 1000); // Check every 1 second changes
 }
 
 // Run the highlightColumns function and start observing changes
 highlightQuarterlyResultColumns();
 highlightYearlyResultColumns();
+highlightQuarterlyShareholdingPattern();
+highlightYearlyShareholdingPattern();
 observeChanges();

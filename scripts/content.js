@@ -109,6 +109,9 @@ const highlight = () => {
         greaterIsBetter: true,
         period: "yearly",
       },
+      "Gross NPA": {
+        greaterIsBetter: false,
+      },
       "Net NPA": {
         greaterIsBetter: false,
         period: "quarterly",
@@ -191,6 +194,21 @@ const highlight = () => {
       FIIs: { greaterIsBetter: true },
       DIIs: { greaterIsBetter: true },
       Public: { greaterIsBetter: false },
+    },
+    firstDataColIndex: 2,
+    getPrevOffset: () => 1,
+    titleSuffix: () => " YoY",
+  });
+
+  // Balance sheet (first numeric col is 2nd, YoY)
+  highlightTable({
+    tableSelector: "#balance-sheet .data-table",
+    classification: {
+      Reserves: { greaterIsBetter: true },
+      Deposits: { greaterIsBetter: true },
+      "Fixed Assets": { greaterIsBetter: true },
+      CWIP: { greaterIsBetter: true },
+      Investments: { greaterIsBetter: true },
     },
     firstDataColIndex: 2,
     getPrevOffset: () => 1,
